@@ -9,8 +9,16 @@ import main.ast.node.expression.values.BooleanValue;
 import main.ast.node.expression.values.IntValue;
 import main.ast.node.expression.values.StringValue;
 import main.ast.node.statement.*;
+import main.symbolTable.SymbolTable;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class VisitorImpl implements Visitor {
+    private Set<String> actorNames = new HashSet<>();
+    private Set<String> knownActorNames = new HashSet<>();
+    private Set<String> actorVarNames = new HashSet<>();
+    private Set<String> msgHandlerNames = new HashSet<>();
 
     protected void visitStatement( Statement stat )
     {
@@ -62,12 +70,41 @@ public class VisitorImpl implements Visitor {
 
     @Override
     public void visit(Program program) {
-        //TODO: implement appropriate visit functionality
+        for (ActorDeclaration actor: program.getActors()) {
+            actor.accept(this);
+            actorNames.add(actor.getName().getName());
+        }
+        program.getMain().accept(this);
     }
 
     @Override
     public void visit(ActorDeclaration actorDeclaration) {
-        //TODO: implement appropriate visit functionality
+        int counter = 0;
+        for (VarDeclaration knownActor : actorDeclaration.getKnownActors()) {
+            counter ++;
+            knownActorNames.add(actorDeclaration.getName().getName() + "_" +
+                    knownActor.getIdentifier().getName() + "_" + counter);
+            knownActor.accept(this);
+        }
+        counter = 0;
+        for (VarDeclaration actorVar : actorDeclaration.getActorVars()) {
+            counter ++;
+            actorVarNames.add(actorDeclaration.getName().getName() + "_" +
+                    actorVar.getIdentifier().getName() + "_" + counter);
+            actorVar.accept(this);
+        }
+        if(actorDeclaration.getInitHandler() != null) {
+            msgHandlerNames.add(actorDeclaration.getName().getName() + "_" +
+                    actorDeclaration.getInitHandler().getName().getName() + "_" + counter);
+            actorDeclaration.getInitHandler().accept(this);
+        }
+        counter = 0;
+        for (HandlerDeclaration msgHandler : actorDeclaration.getMsgHandlers()) {
+            counter ++;
+            msgHandlerNames.add(actorDeclaration.getName().getName() + "_" +
+                    msgHandler.getName().getName() + "_" + counter);
+            msgHandler.accept(this);
+        }
     }
 
     @Override
