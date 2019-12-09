@@ -19,6 +19,8 @@ public class VisitorImpl implements Visitor {
     private Set<String> knownActorNames = new HashSet<>();
     private Set<String> actorVarNames = new HashSet<>();
     private Set<String> msgHandlerNames = new HashSet<>();
+    private Set<String> msgHandlerArgsNames = new HashSet<>();
+    private Set<String> msgHandlerLocalVarsNames = new HashSet<>();
 
     protected void visitStatement( Statement stat )
     {
@@ -79,37 +81,43 @@ public class VisitorImpl implements Visitor {
 
     @Override
     public void visit(ActorDeclaration actorDeclaration) {
-        int counter = 0;
         for (VarDeclaration knownActor : actorDeclaration.getKnownActors()) {
-            counter ++;
             knownActorNames.add(actorDeclaration.getName().getName() + "_" +
-                    knownActor.getIdentifier().getName() + "_" + counter);
+                    knownActor.getIdentifier().getName() + "_" + knownActor.getType());
             knownActor.accept(this);
         }
-        counter = 0;
         for (VarDeclaration actorVar : actorDeclaration.getActorVars()) {
-            counter ++;
             actorVarNames.add(actorDeclaration.getName().getName() + "_" +
-                    actorVar.getIdentifier().getName() + "_" + counter);
+                    actorVar.getIdentifier().getName() + "_" + actorVar.getType());
             actorVar.accept(this);
         }
-        if(actorDeclaration.getInitHandler() != null) {
+        if(actorDeclaration.getInitHandler() != null) { //////////////////////////////////////
             msgHandlerNames.add(actorDeclaration.getName().getName() + "_" +
-                    actorDeclaration.getInitHandler().getName().getName() + "_" + counter);
+                    actorDeclaration.getInitHandler().getName().getName());
             actorDeclaration.getInitHandler().accept(this);
         }
-        counter = 0;
         for (HandlerDeclaration msgHandler : actorDeclaration.getMsgHandlers()) {
-            counter ++;
             msgHandlerNames.add(actorDeclaration.getName().getName() + "_" +
-                    msgHandler.getName().getName() + "_" + counter);
+                    msgHandler.getName().getName());
             msgHandler.accept(this);
         }
     }
 
     @Override
     public void visit(HandlerDeclaration handlerDeclaration) {
-        //TODO: implement appropriate visit functionality
+        for (VarDeclaration arg : handlerDeclaration.getArgs()) {
+            msgHandlerArgsNames.add(handlerDeclaration.getName().getName()
+                    + "_" + arg.getIdentifier().getName() + "_" + arg.getType());
+            arg.accept(this);
+        }
+        for (VarDeclaration localVar : handlerDeclaration.getLocalVars()) {
+            msgHandlerLocalVarsNames.add(handlerDeclaration.getName().getName()
+                    + "_" + localVar.getIdentifier().getName() + "_" + localVar.getType());
+            localVar.accept(this);
+        }
+        for (Statement body : handlerDeclaration.getBody()) {
+            body.accept(this);
+        }
     }
 
     @Override
