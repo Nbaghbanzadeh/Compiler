@@ -155,67 +155,185 @@ msgHandlerCall returns [MsgHandlerCall handlerCall]
         LPAREN el = expressionList RPAREN {$handlerCall.setArgs($el.expressions);} SEMICOLON
     ;
 
-expression returns [Expression e]
-    :   oe = orExpression {$e = $oe.oe;}
-        (assign = ASSIGN exp = expression
-        {
-            $e = new BinaryExpression($oe.oe, $exp.e, BinaryOperator.assign);
-            $e.setLine($assign.getLine());
-            //$e.setType()
-        })?
+expression returns [Expression e]//
+    :   oe = orExpression
+    {
+        $e = $oe.oe;
+    }
+    (assign = ASSIGN exp = expression
+    {
+        $e = new BinaryExpression($oe.oe, $exp.e, BinaryOperator.assign);
+        $e.setLine($assign.getLine());
+    })?
     ;
 
-orExpression returns [Expression oe]
-    :   ae = andExpression {$oe = $ae.ae;}
-        (or = OR ae = andExpression {$oe = new BinaryExpression($oe, $ae.ae, BinaryOperator.or); $oe.setLine($or.getLine());})*
+orExpression returns [Expression oe]//
+    :   ae = andExpression
+    {
+        $oe = $ae.ae;
+    }
+    (or = OR ae = andExpression
+    {
+        $oe = new BinaryExpression($oe, $ae.ae, BinaryOperator.or);
+        $oe.setLine($or.getLine());
+    })*
     ;
 
-andExpression returns [Expression ae]
-    :   ee = equalityExpression {$ae = $ee.ee;}
-        (and = AND e2 = equalityExpression {$ae = new BinaryExpression($ae, $ee.ee, BinaryOperator.and); $ae.setLine($and.getLine());})*
+andExpression returns [Expression ae]//
+    :   ee = equalityExpression
+    {
+        $ae = $ee.ee;
+    }
+    (and = AND e2 = equalityExpression
+    {
+        $ae = new BinaryExpression($ae, $ee.ee, BinaryOperator.and);
+        $ae.setLine($and.getLine());
+    })*
     ;
 
-equalityExpression returns [Expression ee]
-    :   re = relationalExpression {$ee = $re.re;}
-        ({BinaryOperator op; int lineNum;} (eq = EQ {op = BinaryOperator.eq; lineNum = $eq.getLine();} |
-                               neq = NEQ {op = BinaryOperator.neq; lineNum = $neq.getLine();})
-        re = relationalExpression {$ee = new BinaryExpression($ee, $re.re, op); $ee.setLine(lineNum);})*
+equalityExpression returns [Expression ee]//
+    :   re = relationalExpression
+    {
+        $ee = $re.re;
+    }
+    ({
+        BinaryOperator op; int lineNum;
+    } (
+    eq = EQ
+    {
+        op = BinaryOperator.eq;
+        lineNum = $eq.getLine();
+    } |
+    neq = NEQ
+    {
+        op = BinaryOperator.neq;
+        lineNum = $neq.getLine();
+    })
+    re = relationalExpression
+    {
+        $ee = new BinaryExpression($ee, $re.re, op);
+        $ee.setLine(lineNum);
+    })*
     ;
 
-relationalExpression returns [Expression re]
-    :   ae = additiveExpression {$re = $ae.ae;}
-        ({BinaryOperator op; int lineNum;} (lt = LT {op = BinaryOperator.lt; lineNum = $lt.getLine();} |
-                                            gt = GT {op = BinaryOperator.gt; lineNum = $gt.getLine();})
-        ae = additiveExpression {$re = new BinaryExpression($re, $ae.ae, op); $re.setLine(lineNum);})*
+relationalExpression returns [Expression re]//
+    :   ae = additiveExpression
+    {
+        $re = $ae.ae;
+    }
+    ({
+        BinaryOperator op; int lineNum;
+    } (
+    lt = LT
+    {
+        op = BinaryOperator.lt;
+        lineNum = $lt.getLine();
+    } |
+    gt = GT
+    {
+        op = BinaryOperator.gt; lineNum = $gt.getLine();
+    })
+    ae = additiveExpression
+    {
+    $re = new BinaryExpression($re, $ae.ae, op);
+    $re.setLine(lineNum);
+    })*
     ;
 
-additiveExpression returns [Expression ae]
-    :   me = multiplicativeExpression {$ae = $me.me;}
-        ({BinaryOperator op; int lineNum;} (plus = PLUS {op = BinaryOperator.add; lineNum = $plus.getLine();} |
-                                            minus = MINUS {op = BinaryOperator.sub; lineNum = $minus.getLine();})
-        me = multiplicativeExpression {$ae = new BinaryExpression($ae, $me.me, op); $ae.setLine(lineNum);})*
+additiveExpression returns [Expression ae]///
+    :   me = multiplicativeExpression
+    {
+        $ae = $me.me;
+        $ae.setType($me.getType());
+    }
+    ({
+        BinaryOperator op; int lineNum;
+    } (
+    plus = PLUS
+    {
+    op = BinaryOperator.add;
+    lineNum = $plus.getLine();
+    } |
+    minus = MINUS
+    {
+        op = BinaryOperator.sub;
+        lineNum = $minus.getLine();
+    })
+    me = multiplicativeExpression
+    {
+        $ae = new BinaryExpression($ae, $me.me, op);
+        $ae.setLine(lineNum);
+    })*
     ;
 
-multiplicativeExpression returns [Expression me]
-    :   pre = preUnaryExpression {$me = $pre.pue;}
-        ({BinaryOperator op; int lineNum;} ( mult = MULT {op = BinaryOperator.mult; lineNum = $mult.getLine();} |
-                                div = DIV {op = BinaryOperator.div; lineNum = $div.getLine();} |
-                                percent = PERCENT {op = BinaryOperator.mod; lineNum = $percent.getLine();})
-        pre = preUnaryExpression {$me = new BinaryExpression($me, $pre.pue, op); $me.setLine(lineNum);})*
+multiplicativeExpression returns [Expression me]////
+    :   pre = preUnaryExpression
+    {
+        $me = $pre.pue;
+        $me.setType($pre.getType());
+    }
+    ({
+        BinaryOperator op; int lineNum;
+    } (
+    mult = MULT
+    {
+        op = BinaryOperator.mult; lineNum = $mult.getLine();
+    } |
+    div = DIV
+    {
+        op = BinaryOperator.div;
+        lineNum = $div.getLine();
+    } |
+    percent = PERCENT
+    {
+        op = BinaryOperator.mod;
+        lineNum = $percent.getLine();
+    })
+    pre = preUnaryExpression
+    {
+        $me = new BinaryExpression($me, $pre.pue, op);
+        $me.setLine(lineNum);
+        $me.setType($pre.getType());
+    })*
     ;
 
 preUnaryExpression returns [Expression pue]
-    :   not = NOT pe = preUnaryExpression {$pue = new UnaryExpression(UnaryOperator.not, $pe.pue); $pue.setLine($not.getLine());}
-    |   minus = MINUS pe = preUnaryExpression {$pue = new UnaryExpression(UnaryOperator.minus, $pe.pue); $pue.setLine($minus.getLine());}
-    |   plusplus = PLUSPLUS pe = preUnaryExpression {$pue = new UnaryExpression(UnaryOperator.preinc, $pe.pue); $pue.setLine($plusplus.getLine());}
-    |   minusminus = MINUSMINUS pe = preUnaryExpression {$pue = new UnaryExpression(UnaryOperator.predec, $pe.pue); $pue.setLine($minusminus.getLine());}
-    |   post = postUnaryExpression {$pue = $post.pue;}
+    :   not = NOT pe = preUnaryExpression
+    {
+        $pue = new UnaryExpression(UnaryOperator.not, $pe.pue);
+        $pue.setLine($not.getLine());
+        $pue.setType(pe.getType());
+    }
+    |   minus = MINUS pe = preUnaryExpression
+    {
+        $pue = new UnaryExpression(UnaryOperator.minus, $pe.pue);
+        $pue.setLine($minus.getLine());
+        $pue.setType(pe.getType());
+    }
+    |   plusplus = PLUSPLUS pe = preUnaryExpression
+    {
+        $pue = new UnaryExpression(UnaryOperator.preinc, $pe.pue);
+        $pue.setLine($plusplus.getLine());
+        $pue.setType(pe.getType());
+    }
+    |   minusminus = MINUSMINUS pe = preUnaryExpression
+    {
+        $pue = new UnaryExpression(UnaryOperator.predec, $pe.pue);
+        $pue.setLine($minusminus.getLine());
+        $pue.setType(pe.getType());
+    }
+    |   post = postUnaryExpression
+    {
+        $pue = $post.pue;
+        $pue.setType(post.getType());
+    }
     ;
 
 postUnaryExpression returns [Expression pue]
     :   oe = otherExpression
     {
         $pue = $oe.oe;
+        $pue.setType($oe.getType());
     }
     (op = postUnaryOp
     {
