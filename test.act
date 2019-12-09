@@ -17,49 +17,47 @@ actorvars {
 }
 
 msghandler initial(int i2) {
-int i;
-int i2;
-i = i2;
-self.foo(self.i2);
-sender.bar(i + 3 + 4 < 5);
-even = true;
-a = x || y && e || z || w;
+    int i;
+    int i2;
+    i = i2;
+    self.foo(self.i2);
+    sender.bar(i + 3 + 4 < 5);
+    even = true;
+    a = x || y && e || z || w;
 }
 
 msghandler foo() {
-if(odd == true) {
-print(i * i + 1);
-}
-odd =  A[0];
-i = (i++);
-}
-
-msghandler bar() {
-a.foo();
-if (true)
-// nothing
-if (false)
-a = b + 2;
-else {
-print("sdfsdsd");
-}
+    if(odd == true) {
+        print(i * i + 1);
+    }
+    odd =  A[0];
+    i = (i++);
 }
 
 msghandler bar() {
-b.bar();
+    a.foo();
+    if (true)
+    // nothing
+    if (false)
+        a = b + 2;
+    else {
+        print("sdfsdsd");
+    }
+}
+
+msghandler bar() {
+    b.bar();
 }
 }
 
 actor R extends G(5) {
-knownactors {}
-actorvars {}
-
+    knownactors {}
+    actorvars {}
 }
 
 actor G extends A(5) {
-knownactors {}
-actorvars {}
-
+    knownactors {}
+    actorvars {}
 }
 
 actor B extends C(4) {
@@ -107,17 +105,16 @@ boolean check;
 }
 
 msghandler initial(int foo) {
-int foo;
-string b;
-sender.a(self.b, 7);
-for(a = 5; 2; i = 1)
-if(1)
-if(2)
-if(3)
-b = 7;
-else
-a=3;
-
+    int foo;
+    string b;
+    sender.a(self.b, 7);
+    for(a = 5; 2; i = 1)
+    if(1)
+    if(2)
+    if(3)
+    b = 7;
+    else
+    a=3;
 }
 
 msghandler afunc(string b, int foobar[8]) {

@@ -9,18 +9,24 @@ import main.ast.node.expression.values.BooleanValue;
 import main.ast.node.expression.values.IntValue;
 import main.ast.node.expression.values.StringValue;
 import main.ast.node.statement.*;
+import java.util.*;
+
+import main.ast.type.primitiveType.BooleanType;
 import main.symbolTable.SymbolTable;
 
 import java.util.HashSet;
 import java.util.Set;
 
 public class VisitorImpl implements Visitor {
+    private Set<String> errorMessages = new HashSet<>();
     private Set<String> actorNames = new HashSet<>();
     private Set<String> knownActorNames = new HashSet<>();
     private Set<String> actorVarNames = new HashSet<>();
     private Set<String> msgHandlerNames = new HashSet<>();
     private Set<String> msgHandlerArgsNames = new HashSet<>();
     private Set<String> msgHandlerLocalVarsNames = new HashSet<>();
+    private int blockCounter = 0;
+    private Set<String> blocks = new HashSet<>();
 
     protected void visitStatement( Statement stat )
     {
@@ -188,32 +194,82 @@ public class VisitorImpl implements Visitor {
 
     @Override
     public void visit(Block block) {
-        //TODO: implement appropriate visit functionality
+        blockCounter ++;
+        int thisBlock = blockCounter;
+        blocks.add("Block_" + blockCounter);
+        for (Statement S : block.getStatements()) {
+            S.accept(this);
+        }
+        blocks.add("End_" + thisBlock);
     }
 
-    @Override
+    @Override       ////// should I write == type like this???
     public void visit(Conditional conditional) {
-        //TODO: implement appropriate visit functionality
+        BooleanType boolType = new BooleanType();
+        if(conditional.getExpression() != null) {
+            if (conditional.getExpression().getType() != boolType) {
+                errorMessages.add(conditional.getExpression().getLine() + "_" + "condition type must be Boolean");
+            }
+            conditional.getExpression().accept(this);
+        }
+        if(conditional.getThenBody() != null) {
+            conditional.getThenBody().accept(this);
+        }
+        if(conditional.getElseBody() != null) {
+            conditional.getElseBody().accept(this);
+        }
     }
 
-    @Override
+    @Override   ////////// lValue and rValue accept or just accept
     public void visit(For loop) {
-        //TODO: implement appropriate visit functionality
+        BooleanType boolType = new BooleanType();
+        if(loop.getInitialize() != null) {
+            loop.getInitialize().getlValue().accept(this);
+            loop.getInitialize().getlValue().accept(this);
+        }
+        if(loop.getUpdate() != null) {
+            loop.getUpdate().getlValue().accept(this);
+            loop.getUpdate().getlValue().accept(this);
+        }
+        if(loop.getCondition() != null) {
+            if (loop.getCondition().getType() != boolType) {
+                errorMessages.add(loop.getCondition().getLine() + "_condition type must be Boolean");
+            }
+            loop.getCondition().accept(this);
+        }
     }
 
     @Override
     public void visit(Break breakLoop) {
-        //TODO: implement appropriate visit functionality
+        return;
     }
 
     @Override
     public void visit(Continue continueLoop) {
-        //TODO: implement appropriate visit functionality
+        return;
     }
 
-    @Override
+    @Override   ////// == ??
     public void visit(MsgHandlerCall msgHandlerCall) {
-        //TODO: implement appropriate visit functionality
+        Self slf = new Self();
+        Sender sndr = new Sender();
+        if(msgHandlerCall.getInstance() == slf) {
+            ////// get last
+        }
+        else if(msgHandlerCall.getInstance() == sndr) {
+            /////// what should be checked ???
+        }
+        else {
+            if(!(actorNames.contains(msgHandlerCall.getInstance()))) {
+                errorMessages.add(msgHandlerCall.getInstance().getLine() + "_actor "
+                        + msgHandlerCall.getInstance() + " is not declared"); //// Instance name ??
+            }
+            if(!(msgHandlerNames.contains(msgHandlerCall.getMsgHandlerName()))) {
+                errorMessages.add(msgHandlerCall.getMsgHandlerName().getLine()
+                        + "_there is no msghandler name " + msgHandlerCall.getMsgHandlerName().getName()
+                        + " in actor " + msgHandlerCall.getInstance());
+            }
+        }
     }
 
     @Override
