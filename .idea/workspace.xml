@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="57b7bab6-3074-4f67-9933-81f2df8af942" name="Default Changelist" comment="">
       <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+=======
+    <list default="true" id="7e36c3f3-6754-4b81-bc79-0560b6e319e8" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/src/main/visitor/VisitorImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/visitor/VisitorImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test.act" beforeDir="false" afterPath="$PROJECT_DIR$/test.act" afterDir="false" />
+>>>>>>> 9311326c0f5a9e693cd124d38c9a6bdee442cd4a
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -14,12 +20,24 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+<<<<<<< HEAD
   <component name="ProjectId" id="1UxTYCZPiV7Yrrtk0P18UfsiZ7y" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$USER_HOME$/Downloads/antlr-4.7.2-complete.jar!/" />
     <property name="project.structure.last.edited" value="Libraries" />
+=======
+  <component name="ProjectId" id="1UhWVTtI6XCI5GV8Huwzo99FY79" />
+  <component name="PropertiesComponent">
+    <property name="$PROJECT_DIR$/src/antlr/acton.g4::/auto-gen" value="false" />
+    <property name="$PROJECT_DIR$/src/antlr/acton.g4::/gen-listener" value="true" />
+    <property name="$PROJECT_DIR$/src/antlr/acton.g4::/gen-visitor" value="false" />
+    <property name="$PROJECT_DIR$/src/antlr/acton.g4::/output-dir" value="$PROJECT_DIR$/src/main/parsers/" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Downloads/810196615_810196599-2" />
+    <property name="project.structure.last.edited" value="Modules" />
+>>>>>>> 9311326c0f5a9e693cd124d38c9a6bdee442cd4a
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
   </component>
@@ -35,16 +53,84 @@
       </list>
     </option>
   </component>
+<<<<<<< HEAD
+=======
+  <component name="RunManager">
+    <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.antlr.v4.gui.TestRig" />
+      <module name="p3" />
+      <option name="PROGRAM_PARAMETERS" value="acton program -gui test.act" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType" factoryName="Kotlin">
+      <module name="p3" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="WORKING_DIRECTORY" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType" factoryName="Kotlin script">
+      <module name="p3" />
+      <option name="filePath" />
+      <option name="vmParameters" />
+      <option name="alternativeJrePath" />
+      <option name="programParameters" />
+      <option name="passParentEnvs" value="true" />
+      <option name="workingDirectory" />
+      <option name="isAlternativeJrePathEnabled" value="false" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="WORKING_DIRECTORY" />
+      <option name="filePath" />
+      <option name="vmParameters" />
+      <option name="alternativeJrePath" />
+      <option name="programParameters" />
+      <option name="passParentEnvs" value="true" />
+      <option name="workingDirectory" />
+      <option name="isAlternativeJrePathEnabled" value="false" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="WORKING_DIRECTORY" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+>>>>>>> 9311326c0f5a9e693cd124d38c9a6bdee442cd4a
   <component name="SvnConfiguration">
     <configuration />
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
+<<<<<<< HEAD
       <changelist id="57b7bab6-3074-4f67-9933-81f2df8af942" name="Default Changelist" comment="" />
       <created>1576297291784</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1576297291784</updated>
+=======
+      <changelist id="7e36c3f3-6754-4b81-bc79-0560b6e319e8" name="Default Changelist" comment="" />
+      <created>1575809330357</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1575809330357</updated>
+>>>>>>> 9311326c0f5a9e693cd124d38c9a6bdee442cd4a
     </task>
     <servers />
   </component>

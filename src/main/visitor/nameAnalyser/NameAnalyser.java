@@ -338,7 +338,7 @@ public class NameAnalyser extends VisitorImpl {
     }
 
     @Override
-    public void visit(BooleanValue value){
+    public void visit(BooleanValue value) {
 
     }
 
