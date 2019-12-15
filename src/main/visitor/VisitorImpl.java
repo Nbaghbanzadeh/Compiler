@@ -111,6 +111,7 @@ public class VisitorImpl implements Visitor {
 
     @Override
     public void visit(Program program) {
+        System.out.println("*******^^^");
         for (ActorDeclaration actor: program.getActors()) {
             currentActor = actor.getName().getName();
             actor.accept(this);
@@ -126,7 +127,6 @@ public class VisitorImpl implements Visitor {
                 errorMessages.add("actor " + actorDeclaration.getParentName().getName() + " is not declared");
             }
             else {
-                actorDeclaration.getParentName().accept(this);
                 for (String str : knownActorNames) { //add it's parent's knownActors to the lists
                     if(str.split("_", 2)[0] == actorDeclaration.getParentName().getName()) {
                         knownActorNames.add(actorDeclaration.getName().getName() +
@@ -160,12 +160,10 @@ public class VisitorImpl implements Visitor {
             }
         }
         for (VarDeclaration knownActor : actorDeclaration.getKnownActors()) {
-            knownActor.accept(this);
             knownActorNames.add(actorDeclaration.getName().getName() + "_" +
                     knownActor.getIdentifier().getName() + "_" + knownActor.getType().toString());
         }
         for (VarDeclaration actorVar : actorDeclaration.getActorVars()) {
-            actorVar.accept(this);
             actorVarNames.add(actorDeclaration.getName().getName() + "_" +
                     actorVar.getIdentifier().getName() + "_" + actorVar.getType().toString());
         }
@@ -177,7 +175,7 @@ public class VisitorImpl implements Visitor {
             currentHandler = "";
         }
         for (HandlerDeclaration msgHandler : actorDeclaration.getMsgHandlers()) {
-            currentHandler = actorDeclaration.getInitHandler().getName().getName();
+            currentHandler = msgHandler.getName().getName();
             msgHandler.accept(this);
             msgHandlerNames.add(actorDeclaration.getName().getName() + "_" +
                     msgHandler.getName().getName());
@@ -227,17 +225,19 @@ public class VisitorImpl implements Visitor {
         if(unaryExpression.getUnaryOperator() == UnaryOperator.minus || unaryExpression.getUnaryOperator() == UnaryOperator.postdec
                 || unaryExpression.getUnaryOperator() == UnaryOperator.postinc || unaryExpression.getUnaryOperator() == UnaryOperator.predec
                 || unaryExpression.getUnaryOperator() == UnaryOperator.preinc) {
-            if(!(unaryExpression.getType().toString() == "int")) {
+            if(!(unaryExpression.getOperand().getType().toString() == "int")) {
+                System.out.println("%^&$*");
                 errorMessages.add(unaryExpression.getLine() + "_unsupported operand type for "
                         + unaryExpression.getUnaryOperator().toString());
                 unaryExpression.setType(new NoType());
             }
             else {
+                System.out.println("%^&$*");
                 unaryExpression.setType(new IntType());
             }
         }
         if(unaryExpression.getUnaryOperator() == UnaryOperator.not) {
-            if(!(unaryExpression.getType().toString() == "boolean")) {
+            if(!(unaryExpression.getOperand().getType().toString() == "boolean")) {
                 errorMessages.add(unaryExpression.getLine() + "_unsupported operand type for "
                         + unaryExpression.getUnaryOperator().toString());
                 unaryExpression.setType(new NoType());
@@ -246,15 +246,30 @@ public class VisitorImpl implements Visitor {
                 unaryExpression.setType(new BooleanType());
             }
         }
+        System.out.println(unaryExpression.getType().toString());
     }
 
     @Override
     public void visit(BinaryExpression binaryExpression) {
+        System.out.println("&&");
         binaryExpression.getLeft().accept(this);
         binaryExpression.getRight().accept(this);
-        if(binaryExpression.getBinaryOperator() == BinaryOperator.and || binaryExpression.getBinaryOperator() == BinaryOperator.and) {
-            if(!(binaryExpression.getRight().getType().toString() == "boolean"
-                    && binaryExpression.getLeft().getType().toString() == "boolean")) {
+        if(binaryExpression.getBinaryOperator() == BinaryOperator.eq || binaryExpression.getBinaryOperator() == BinaryOperator.neq) {
+            binaryExpression.setType(new BooleanType());
+            System.out.println("!!!!!");
+        }
+        if(binaryExpression.getBinaryOperator() == BinaryOperator.assign) {
+            if(!isSubtype(binaryExpression.getRight().getType(), binaryExpression.getRight().getType())) {
+                errorMessages.add(binaryExpression.getLine() + "_unsupported operand type for " + BinaryOperator.assign.toString());
+                binaryExpression.setType(new NoType());
+            }
+            else {
+                binaryExpression.setType(binaryExpression.getLeft().getType());
+            }
+        }
+        if(binaryExpression.getBinaryOperator() == BinaryOperator.and || binaryExpression.getBinaryOperator() == BinaryOperator.or) {
+            if(binaryExpression.getRight().getType().toString() != "boolean"
+                    || binaryExpression.getLeft().getType().toString() != "boolean") {
                 errorMessages.add(binaryExpression.getLine() + "_unsupported operand type for "
                         + binaryExpression.getBinaryOperator().toString());
                 binaryExpression.setType(new NoType());
@@ -267,15 +282,17 @@ public class VisitorImpl implements Visitor {
                 || binaryExpression.getBinaryOperator() == BinaryOperator.add || binaryExpression.getBinaryOperator() == BinaryOperator.sub
                 || binaryExpression.getBinaryOperator() == BinaryOperator.mod || binaryExpression.getBinaryOperator() == BinaryOperator.gt
                 || binaryExpression.getBinaryOperator() == BinaryOperator.lt) {
-            if(!(binaryExpression.getRight().getType().toString() == "int"
+            if (!(binaryExpression.getRight().getType().toString() == "int"
                     && binaryExpression.getLeft().getType().toString() == "int")) {
                 errorMessages.add(binaryExpression.getLine() + "_unsupported operand type for "
                         + binaryExpression.getBinaryOperator().toString());
                 binaryExpression.setType(new NoType());
-            }
-            else {
+            } else {
                 binaryExpression.setType(new IntType());
             }
+        }
+        for (String str : errorMessages) {
+            System.out.println(str);
         }
     }
 
@@ -295,31 +312,33 @@ public class VisitorImpl implements Visitor {
         for (String str : knownActorNames) {
             if(str.split("_", 3)[1] == identifier.getName() && str.split("_", 3)[0] == currentActor){
                 identifier.setType(returnType(str.split("_", 3)[2], identifier));
+                foundIt = true;
             }
-            foundIt = true;
         }
         for (String str : actorVarNames) {
             if(str.split("_", 3)[1] == identifier.getName() && str.split("_", 3)[0] == currentActor){
                 identifier.setType(returnType(str.split("_", 3)[2], identifier));
+                foundIt = true;
             }
-            foundIt = true;
         }
         for (String str : msgHandlerArgsNames2) {
             if (str.split("_", 4)[1] == identifier.getName() && str.split("_", 4)[0] == currentHandler
                     &&str.split("_", 4)[2] == currentActor) {
                 identifier.setType(returnType(str.split("_", 4)[3], identifier));
+                foundIt = true;
             }
-            foundIt = true;
         }
         for (String str : msgHandlerArgsNames2) {
             if (str.split("_", 4)[1] == identifier.getName() && str.split("_", 4)[0] == currentHandler
                     &&str.split("_", 4)[3] == currentActor) {
                 identifier.setType(returnType(str.split("_", 4)[2], identifier));
+                foundIt = true;
             }
-            foundIt = true;
         }
         if(!foundIt) {
             errorMessages.add(identifier.getLine() + "_variable " + identifier.getName() +" is not declared");
+            identifier.setType(new NoType());
+            System.out.println(identifier.getType().toString());
         }
     }
 
@@ -339,6 +358,7 @@ public class VisitorImpl implements Visitor {
     @Override
     public void visit(Conditional conditional) {
         if(conditional.getExpression() != null) {
+            conditional.getExpression().accept(this);
             if (conditional.getExpression().getType().toString() != "boolean") {
                 errorMessages.add(conditional.getExpression().getLine() + "_" + "condition type must be Boolean");
             }
@@ -363,6 +383,7 @@ public class VisitorImpl implements Visitor {
             loop.getUpdate().getlValue().accept(this);
         }
         if(loop.getCondition() != null) {
+            loop.getCondition().accept(this);
             if (loop.getCondition().getType().toString() != "boolean") {
                 errorMessages.add(loop.getCondition().getLine() + "_condition type must be Boolean");
             }
@@ -396,7 +417,7 @@ public class VisitorImpl implements Visitor {
                 errorMessages.add(msgHandlerCall.getInstance().getLine() + "_actor "
                         + ((Identifier) msgHandlerCall.getInstance()).getName() + " is not declared"); //// Instance name ??
             }
-            if(!(msgHandlerNames.contains(((Identifier) msgHandlerCall.getInstance()).getName() + "_" +
+            else if(!(msgHandlerNames.contains(((Identifier) msgHandlerCall.getInstance()).getName() + "_" +
                     msgHandlerCall.getMsgHandlerName().getName()))) {
                 errorMessages.add(msgHandlerCall.getMsgHandlerName().getLine()
                         + "_there is no msghandler name " + msgHandlerCall.getMsgHandlerName().getName()
@@ -440,10 +461,18 @@ public class VisitorImpl implements Visitor {
 
     @Override
     public void visit(Assign assign) {
+        System.out.println("******");
         assign.getlValue().accept(this);
         assign.getrValue().accept(this);
-        if(isSubtype(assign.getrValue().getType(), assign.getlValue().getType())) {
+        if(!(isSubtype(assign.getrValue().getType(), assign.getlValue().getType()))) {
             errorMessages.add(assign.getLine() + "_left side of assignment must be a valid lvalue");
+            assign.getlValue().setType(new NoType());
+        }
+        else {
+            System.out.println("MAHYA");
+        }
+        for (String str : errorMessages) {
+            System.out.println(str);
         }
     }
 

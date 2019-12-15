@@ -1,15 +1,161 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-<<<<<<< HEAD
-    <list default="true" id="57b7bab6-3074-4f67-9933-81f2df8af942" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-=======
     <list default="true" id="7e36c3f3-6754-4b81-bc79-0560b6e319e8" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Compiler" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/acton.g4" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/antlr/actonBaseListener.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/antlr/actonLexer.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/antlr/actonListener.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/antlr/actonParser$ActorDeclarationContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/antlr/actonParser$ActorInstantiationContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/antlr/actonParser$ActorVarAccessContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/antlr/actonParser$AdditiveExpressionContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/antlr/actonParser$AndExpressionContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/antlr/actonParser$ArgDeclarationsContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/antlr/actonParser$ArrayCallContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/antlr/actonParser$AssignStmtContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/antlr/actonParser$AssignmentContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/antlr/actonParser$BlockStmtContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/antlr/actonParser$BreakStmtContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/antlr/actonParser$ContinueStmtContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/antlr/actonParser$EqualityExpressionContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/antlr/actonParser$ExpressionContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/antlr/actonParser$ExpressionListContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/antlr/actonParser$ForStmtContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/antlr/actonParser$IdentifierContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/antlr/actonParser$IfStmtContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/antlr/actonParser$InitHandlerDeclarationContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/antlr/actonParser$MainDeclarationContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/antlr/actonParser$MsgHandlerCallContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/antlr/actonParser$MsgHandlerDeclarationContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/antlr/actonParser$MultiplicativeExpressionContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/antlr/actonParser$OrExpressionContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/antlr/actonParser$OtherExpressionContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/antlr/actonParser$PostUnaryExpressionContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/antlr/actonParser$PostUnaryOpContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/antlr/actonParser$PreUnaryExpressionContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/antlr/actonParser$PrintStmtContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/antlr/actonParser$ProgramContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/antlr/actonParser$RelationalExpressionContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/antlr/actonParser$StatementContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/antlr/actonParser$ValueContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/antlr/actonParser$VarDeclarationContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/antlr/actonParser$VarDeclarationsContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/antlr/actonParser.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/Acton.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/ast/node/Main.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/ast/node/Node.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/ast/node/Program.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/ast/node/declaration/ActorDeclaration.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/ast/node/declaration/ActorInstantiation.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/ast/node/declaration/Declaration.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/ast/node/declaration/VarDeclaration.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/ast/node/declaration/handler/HandlerDeclaration.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/ast/node/declaration/handler/InitHandlerDeclaration.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/ast/node/declaration/handler/MsgHandlerDeclaration.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/ast/node/expression/ActorVarAccess.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/ast/node/expression/ArrayCall.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/ast/node/expression/BinaryExpression.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/ast/node/expression/Expression.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/ast/node/expression/Identifier.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/ast/node/expression/Self.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/ast/node/expression/Sender.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/ast/node/expression/UnaryExpression.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/ast/node/expression/operators/BinaryOperator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/ast/node/expression/operators/UnaryOperator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/ast/node/expression/values/BooleanValue.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/ast/node/expression/values/IntValue.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/ast/node/expression/values/StringValue.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/ast/node/expression/values/Value.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/ast/node/statement/Assign.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/ast/node/statement/Block.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/ast/node/statement/Break.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/ast/node/statement/Conditional.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/ast/node/statement/Continue.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/ast/node/statement/For.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/ast/node/statement/MsgHandlerCall.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/ast/node/statement/Print.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/ast/node/statement/Statement.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/ast/type/Type.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/ast/type/actorType/ActorType.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/ast/type/arrayType/ArrayType.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/ast/type/noType/NoType.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/ast/type/primitiveType/BooleanType.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/ast/type/primitiveType/IntType.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/ast/type/primitiveType/StringType.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/compileError/CompileErrorException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/parsers/acton.interp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/parsers/acton.tokens" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/parsers/actonBaseListener.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/parsers/actonLexer.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/parsers/actonLexer.interp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/parsers/actonLexer.tokens" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/parsers/actonListener.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/parsers/actonParser$ActorDeclarationContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/parsers/actonParser$ActorInstantiationContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/parsers/actonParser$ActorVarAccessContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/parsers/actonParser$AdditiveExpressionContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/parsers/actonParser$AndExpressionContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/parsers/actonParser$ArgDeclarationsContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/parsers/actonParser$ArrayCallContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/parsers/actonParser$AssignStmtContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/parsers/actonParser$AssignmentContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/parsers/actonParser$BlockStmtContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/parsers/actonParser$BreakStmtContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/parsers/actonParser$ContinueStmtContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/parsers/actonParser$EqualityExpressionContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/parsers/actonParser$ExpressionContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/parsers/actonParser$ExpressionListContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/parsers/actonParser$ForStmtContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/parsers/actonParser$IdentifierContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/parsers/actonParser$IfStmtContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/parsers/actonParser$InitHandlerDeclarationContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/parsers/actonParser$MainDeclarationContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/parsers/actonParser$MsgHandlerCallContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/parsers/actonParser$MsgHandlerDeclarationContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/parsers/actonParser$MultiplicativeExpressionContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/parsers/actonParser$OrExpressionContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/parsers/actonParser$OtherExpressionContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/parsers/actonParser$PostUnaryExpressionContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/parsers/actonParser$PostUnaryOpContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/parsers/actonParser$PreUnaryExpressionContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/parsers/actonParser$PrintStmtContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/parsers/actonParser$ProgramContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/parsers/actonParser$RelationalExpressionContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/parsers/actonParser$StatementContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/parsers/actonParser$ValueContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/parsers/actonParser$VarDeclarationContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/parsers/actonParser$VarDeclarationsContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/parsers/actonParser.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/parsers/antlr/acton.interp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/parsers/antlr/acton.tokens" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/parsers/antlr/actonLexer.interp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/parsers/antlr/actonLexer.tokens" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/symbolTable/Stack.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/symbolTable/SymbolTable.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/symbolTable/SymbolTableActorItem.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/symbolTable/SymbolTableHandlerItem.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/symbolTable/SymbolTableItem.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/symbolTable/SymbolTableMainItem.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/symbolTable/itemException/ItemAlreadyExistsException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/symbolTable/itemException/ItemNotFoundException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/symbolTable/symbolTableVariableItem/SymbolTableActorVariableItem.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/symbolTable/symbolTableVariableItem/SymbolTableHandlerArgumentItem.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/symbolTable/symbolTableVariableItem/SymbolTableKnownActorItem.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/symbolTable/symbolTableVariableItem/SymbolTableLocalVariableItem.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/symbolTable/symbolTableVariableItem/SymbolTableVariableItem.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/visitor/Visitor.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/visitor/VisitorImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/visitor/nameAnalyser/NameAnalyser.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/visitor/nameAnalyser/SymbolTableActorParentLinker.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/visitor/nameAnalyser/SymbolTableConstructor.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/p3/main/visitor/nameAnalyser/TraverseState.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/p3.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/Acton.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Acton.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/visitor/VisitorImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/visitor/VisitorImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test.act" beforeDir="false" afterPath="$PROJECT_DIR$/test.act" afterDir="false" />
->>>>>>> 9311326c0f5a9e693cd124d38c9a6bdee442cd4a
+      <change beforePath="$PROJECT_DIR$/src/main/visitor/nameAnalyser/NameAnalyser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/visitor/nameAnalyser/NameAnalyser.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -20,15 +166,8 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-<<<<<<< HEAD
-  <component name="ProjectId" id="1UxTYCZPiV7Yrrtk0P18UfsiZ7y" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
-  <component name="PropertiesComponent">
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$USER_HOME$/Downloads/antlr-4.7.2-complete.jar!/" />
-    <property name="project.structure.last.edited" value="Libraries" />
-=======
   <component name="ProjectId" id="1UhWVTtI6XCI5GV8Huwzo99FY79" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
     <property name="$PROJECT_DIR$/src/antlr/acton.g4::/auto-gen" value="false" />
     <property name="$PROJECT_DIR$/src/antlr/acton.g4::/gen-listener" value="true" />
@@ -37,7 +176,6 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$USER_HOME$/Downloads/810196615_810196599-2" />
     <property name="project.structure.last.edited" value="Modules" />
->>>>>>> 9311326c0f5a9e693cd124d38c9a6bdee442cd4a
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
   </component>
@@ -53,13 +191,19 @@
       </list>
     </option>
   </component>
-<<<<<<< HEAD
-=======
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.test">
     <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.antlr.v4.gui.TestRig" />
       <module name="p3" />
       <option name="PROGRAM_PARAMETERS" value="acton program -gui test.act" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="test" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="main.Acton" />
+      <module name="Phase3" />
+      <option name="PROGRAM_PARAMETERS" value="test.act" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -111,26 +255,21 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="Application.Unnamed" />
+      <item itemvalue="Application.test" />
+    </list>
   </component>
->>>>>>> 9311326c0f5a9e693cd124d38c9a6bdee442cd4a
   <component name="SvnConfiguration">
     <configuration />
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-<<<<<<< HEAD
-      <changelist id="57b7bab6-3074-4f67-9933-81f2df8af942" name="Default Changelist" comment="" />
-      <created>1576297291784</created>
-      <option name="number" value="Default" />
-      <option name="presentableId" value="Default" />
-      <updated>1576297291784</updated>
-=======
       <changelist id="7e36c3f3-6754-4b81-bc79-0560b6e319e8" name="Default Changelist" comment="" />
       <created>1575809330357</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1575809330357</updated>
->>>>>>> 9311326c0f5a9e693cd124d38c9a6bdee442cd4a
     </task>
     <servers />
   </component>
@@ -139,7 +278,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
