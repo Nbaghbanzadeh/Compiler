@@ -28,11 +28,13 @@ public class VisitorImpl implements Visitor {
     private ArrayList<String> knownActorNames = new ArrayList<String>();
     private ArrayList<String> actorVarNames = new ArrayList<String>();
     private ArrayList<String> msgHandlerNames = new ArrayList<String>();
+    private ArrayList<String> msgHandlerNames2 = new ArrayList<String>();
     private ArrayList<String> msgHandlerArgsNames = new ArrayList<String>();
     private ArrayList<String> msgHandlerLocalVarsNames = new ArrayList<String>();
     private ArrayList<String> blocks = new ArrayList<String>();
     private ArrayList<String> varDeclarationNames = new ArrayList<String>();
     private ArrayList<String> msgHandlerArgsNames2 = new ArrayList<String>();
+    private ArrayList<String> parents = new ArrayList<String>();
     private int blockCounter = 0;
     private int globalThisBlock = 0;
     private String currentActor = "";
@@ -87,116 +89,193 @@ public class VisitorImpl implements Visitor {
     }
 
     public boolean isSubtype(Type right, Type left) {
-        if(left.toString() == right.toString()){
+        if(left.toString().equals(right.toString())){
             return true;
         }
-        if(right.toString() == "notype") {
+        if(right.toString().equals("notype")) {
             return true;
         }
         return false;
     }
 
     public Type returnType(String toString, Identifier id) {
-        if(toString == "int")
+        if(toString.equals("int"))
             return new IntType();
-        else if(toString == "boolean")
+        else if(toString.equals("boolean"))
             return new BooleanType();
-        else if(toString == "int[]")
+        else if(toString.equals("int[]"))
             return new ArrayType(1);
-        else if(toString == "string")
+        else if(toString.equals("string"))
             return new StringType();
         else
             return new NoType();
     }
 
+    public void firstOfAll(Program program) {
+        ArrayList<String> knownActorNamesTemp = new ArrayList<String>();
+        ArrayList<String> actorVarNamesTemp = new ArrayList<String>();
+        ArrayList<String> msgHandlerNamesTemp = new ArrayList<String>();
+        ArrayList<String> msgHandlerArgsNamesTemp = new ArrayList<String>();
+        ArrayList<String> msgHandlerLocalVarsNamesTemp = new ArrayList<String>();
+
+        for (ActorDeclaration actorDeclaration: program.getActors()) {
+            currentActor = actorDeclaration.getName().getName();
+            actorNames.add(actorDeclaration.getName().getName());
+            if(actorDeclaration.getParentName() != null)
+                parents.add(actorDeclaration.getName().getName() + "#" + actorDeclaration.getParentName().getName());
+            else
+                parents.add(actorDeclaration.getName().getName() + "#$noParent");
+            for (VarDeclaration knownActor : actorDeclaration.getKnownActors()) {
+                knownActorNames.add(actorDeclaration.getName().getName() + "#" +
+                        knownActor.getIdentifier().getName() + "#" + knownActor.getType().toString());
+            }
+            for (VarDeclaration actorVar : actorDeclaration.getActorVars()) {
+                actorVarNames.add(actorDeclaration.getName().getName() + "#" +
+                        actorVar.getIdentifier().getName() + "#" + actorVar.getType().toString());
+            }
+            if(actorDeclaration.getInitHandler() != null) { //////////////////////////////////////
+                HandlerDeclaration handlerDeclaration = actorDeclaration.getInitHandler();
+                for (VarDeclaration arg : handlerDeclaration.getArgs()) {
+                    msgHandlerArgsNames.add(handlerDeclaration.getName().getName()
+                            + "#" + arg.getType().toString() + "#"  + currentActor);
+                    msgHandlerArgsNames2.add(handlerDeclaration.getName().getName()
+                            + "#" + arg.getIdentifier().getName() + "#"  + currentActor + "#" + arg.getType().toString());
+                }
+                for (VarDeclaration localVar : handlerDeclaration.getLocalVars()) {
+                    msgHandlerLocalVarsNames.add(handlerDeclaration.getName().getName()
+                            + "#" + localVar.getIdentifier().getName() + "#" + localVar.getType().toString() + "#" + currentActor);
+                }
+                msgHandlerNames.add(actorDeclaration.getName().getName() + "#" +
+                        actorDeclaration.getInitHandler().getName().getName());
+            }
+            for (HandlerDeclaration handlerDeclaration : actorDeclaration.getMsgHandlers()) {
+                for (VarDeclaration arg : handlerDeclaration.getArgs()) {
+                    msgHandlerArgsNames.add(handlerDeclaration.getName().getName()
+                            + "#" + arg.getType().toString() + "#"  + currentActor);
+                    msgHandlerArgsNames2.add(handlerDeclaration.getName().getName()
+                            + "#" + arg.getIdentifier().getName() + "#"  + currentActor + "#" + arg.getType().toString());
+                }
+                for (VarDeclaration localVar : handlerDeclaration.getLocalVars()) {
+                    msgHandlerLocalVarsNames.add(handlerDeclaration.getName().getName()
+                            + "#" + localVar.getIdentifier().getName() + "#" + localVar.getType().toString() + "#" + currentActor);
+                }
+                msgHandlerNames.add(actorDeclaration.getName().getName() + "#" +
+                        handlerDeclaration.getName().getName());
+            }
+        }
+        for (ActorDeclaration actorDeclaration: program.getActors()) {
+            for (String str : parents) {
+                if(str.split("#", 2)[0].equals(actorDeclaration.getName().getName())) {
+                    String now = str;
+                    String man = now.split("#", 2)[0];
+                    while (true) {
+                        if(!(actorNames.contains(now.split("#", 2)[1])))
+                            break;
+                        for (String str1 : knownActorNames) { //add it's parent's knownActors to the lists
+                            if(str1.split("#", 2)[0].equals(now.split("#", 2)[1])) {
+                                knownActorNamesTemp.add(man +
+                                        "#" + str1.split("#", 2)[1]);
+                            }
+                        }
+                        for (String str1 : knownActorNamesTemp) {
+                            knownActorNames.add(str1);
+                        }
+                        knownActorNamesTemp.clear();
+                        for (String str1 : actorVarNames) { //add it's parent's actorVars to the lists
+                            if(str1.split("#", 2)[0].equals(now.split("#", 2)[1])) {
+                                actorVarNamesTemp.add(man +
+                                        "#" + str1.split("#", 2)[1]);
+                            }
+                        }
+                        for (String str1 : actorVarNamesTemp) {
+                            actorVarNames.add(str1);
+                        }
+                        actorVarNamesTemp.clear();
+                        for (String str1 : msgHandlerNames) { //add it's parent's msgHandlers to the lists
+                            if(str1.split("#", 2)[0].equals(now.split("#", 2)[1])) {
+                                msgHandlerNamesTemp.add(man +
+                                        "#" + str1.split("#", 2)[1]);
+                            }
+                        }
+                        for (String str1 : msgHandlerNamesTemp) {
+                            msgHandlerNames.add(str1);
+                        }
+                        msgHandlerNamesTemp.clear();
+                        for (String str1 : msgHandlerArgsNames) { //add it's parent's msgHandlers Args to the lists
+                            if(str1.split("#", 2)[0].equals(now.split("#", 2)[1])) {
+                                msgHandlerArgsNamesTemp.add(man +
+                                        "#" + str1.split("#", 2)[1]);
+                            }
+                        }
+                        for (String str1 : msgHandlerArgsNamesTemp) {
+                            msgHandlerArgsNames.add(str1);
+                        }
+                        msgHandlerArgsNamesTemp.clear();
+                        for (String str1 : msgHandlerLocalVarsNames) { //add it's parent's msgHandlers localVars to the lists
+                            if(str1.split("#", 2)[0].equals(now.split("#", 2)[1])) {
+                                msgHandlerLocalVarsNamesTemp.add(man +
+                                        "#" + str1.split("#", 2)[1]);
+                            }
+                        }
+                        for (String str1 : msgHandlerLocalVarsNamesTemp) {
+                            msgHandlerLocalVarsNames.add(str1);
+                        }
+                        msgHandlerLocalVarsNamesTemp.clear();
+                        if(now.split("#", 2)[1].equals("$noParent"))
+                            break;
+                        for (String s : parents) {
+                            if(s.split("#", 2)[0].equals(now.split("#", 2)[1])) {
+                                now = s;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        System.out.println("^^^^^");
+        for (String str : actorVarNames) {
+            System.out.println(str);
+        }
+        System.out.println("^^^^^");
+    }
+
     @Override
     public void visit(Program program) {
-        System.out.println("*******^^^");
+        firstOfAll(program);
         for (ActorDeclaration actor: program.getActors()) {
             currentActor = actor.getName().getName();
             actor.accept(this);
             actorNames.add(actor.getName().getName());
         }
         program.getMain().accept(this);
+        for (String str : errorMessages) {
+            System.out.println(str);
+        }
     }
 
     @Override
     public void visit(ActorDeclaration actorDeclaration) {
         if(actorDeclaration.getParentName() != null) {
             if(!(actorNames.contains(actorDeclaration.getParentName().getName()))) {
-                errorMessages.add("actor " + actorDeclaration.getParentName().getName() + " is not declared");
+                errorMessages.add(actorDeclaration.getParentName().getLine() + "#actor "
+                        + actorDeclaration.getParentName().getName() + " is not declared");
             }
-            else {
-                for (String str : knownActorNames) { //add it's parent's knownActors to the lists
-                    if(str.split("_", 2)[0] == actorDeclaration.getParentName().getName()) {
-                        knownActorNames.add(actorDeclaration.getName().getName() +
-                                "_" + str.split("_", 2)[1]);
-                    }
-                }
-                for (String str : actorVarNames) { //add it's parent's actorVars to the lists
-                    if(str.split("_", 2)[0] == actorDeclaration.getParentName().getName()) {
-                        actorVarNames.add(actorDeclaration.getName().getName() +
-                                "_" + str.split("_", 2)[1]);
-                    }
-                }
-                for (String str : msgHandlerNames) { //add it's parent's msgHandlers to the lists
-                    if(str.split("_", 2)[0] == actorDeclaration.getParentName().getName()) {
-                        msgHandlerNames.add(actorDeclaration.getName().getName() +
-                                "_" + str.split("_", 2)[1]);
-                    }
-                }
-                for (String str : msgHandlerArgsNames) { //add it's parent's msgHandlers Args to the lists
-                    if(str.split("_", 2)[0] == actorDeclaration.getParentName().getName()) {
-                        msgHandlerArgsNames.add(actorDeclaration.getName().getName() +
-                                "_" + str.split("_", 2)[1]);
-                    }
-                }
-                for (String str : msgHandlerLocalVarsNames) { //add it's parent's msgHandlers localVars to the lists
-                    if(str.split("_", 2)[0] == actorDeclaration.getParentName().getName()) {
-                        msgHandlerLocalVarsNames.add(actorDeclaration.getName().getName() +
-                                "_" + str.split("_", 2)[1]);
-                    }
-                }
-            }
-        }
-        for (VarDeclaration knownActor : actorDeclaration.getKnownActors()) {
-            knownActorNames.add(actorDeclaration.getName().getName() + "_" +
-                    knownActor.getIdentifier().getName() + "_" + knownActor.getType().toString());
-        }
-        for (VarDeclaration actorVar : actorDeclaration.getActorVars()) {
-            actorVarNames.add(actorDeclaration.getName().getName() + "_" +
-                    actorVar.getIdentifier().getName() + "_" + actorVar.getType().toString());
         }
         if(actorDeclaration.getInitHandler() != null) { //////////////////////////////////////
             currentHandler = actorDeclaration.getInitHandler().getName().getName();
             actorDeclaration.getInitHandler().accept(this);
-            msgHandlerNames.add(actorDeclaration.getName().getName() + "_" +
-                    actorDeclaration.getInitHandler().getName().getName());
             currentHandler = "";
         }
         for (HandlerDeclaration msgHandler : actorDeclaration.getMsgHandlers()) {
             currentHandler = msgHandler.getName().getName();
             msgHandler.accept(this);
-            msgHandlerNames.add(actorDeclaration.getName().getName() + "_" +
-                    msgHandler.getName().getName());
             currentHandler = "";
         }
     }
 
     @Override
     public void visit(HandlerDeclaration handlerDeclaration) {
-        for (VarDeclaration arg : handlerDeclaration.getArgs()) {
-            msgHandlerArgsNames.add(handlerDeclaration.getName().getName()
-                    + "_" + arg.getType().toString() + "_"  + currentActor);
-            msgHandlerArgsNames2.add(handlerDeclaration.getName().getName()
-                    + "_" + arg.getIdentifier().getName() + "_"  + currentActor + "_" + arg.getType().toString());
-            arg.accept(this);
-        }
-        for (VarDeclaration localVar : handlerDeclaration.getLocalVars()) {
-            msgHandlerLocalVarsNames.add(handlerDeclaration.getName().getName()
-                    + "_" + localVar.getIdentifier().getName() + "_" + localVar.getType().toString() + "_" + currentActor);
-            localVar.accept(this);
-        }
         for (Statement body : handlerDeclaration.getBody()) {
             body.accept(this);
         }
@@ -204,8 +283,8 @@ public class VisitorImpl implements Visitor {
 
     @Override
     public void visit(VarDeclaration varDeclaration) {
-        varDeclarationNames.add(varDeclaration.getIdentifier().getName() + "_"
-                + varDeclaration.getType().toString() + "_" + globalThisBlock);
+        varDeclarationNames.add(varDeclaration.getIdentifier().getName() + "#"
+                + varDeclaration.getType().toString() + "#" + globalThisBlock);
     }
 
     @Override
@@ -225,20 +304,18 @@ public class VisitorImpl implements Visitor {
         if(unaryExpression.getUnaryOperator() == UnaryOperator.minus || unaryExpression.getUnaryOperator() == UnaryOperator.postdec
                 || unaryExpression.getUnaryOperator() == UnaryOperator.postinc || unaryExpression.getUnaryOperator() == UnaryOperator.predec
                 || unaryExpression.getUnaryOperator() == UnaryOperator.preinc) {
-            if(!(unaryExpression.getOperand().getType().toString() == "int")) {
-                System.out.println("%^&$*");
-                errorMessages.add(unaryExpression.getLine() + "_unsupported operand type for "
+            if(!(unaryExpression.getOperand().getType().toString().equals("int"))) {
+                errorMessages.add(unaryExpression.getLine() + "#unsupported operand type for "
                         + unaryExpression.getUnaryOperator().toString());
                 unaryExpression.setType(new NoType());
             }
             else {
-                System.out.println("%^&$*");
                 unaryExpression.setType(new IntType());
             }
         }
         if(unaryExpression.getUnaryOperator() == UnaryOperator.not) {
-            if(!(unaryExpression.getOperand().getType().toString() == "boolean")) {
-                errorMessages.add(unaryExpression.getLine() + "_unsupported operand type for "
+            if(!(unaryExpression.getOperand().getType().toString().equals("boolean"))) {
+                errorMessages.add(unaryExpression.getLine() + "#unsupported operand type for "
                         + unaryExpression.getUnaryOperator().toString());
                 unaryExpression.setType(new NoType());
             }
@@ -246,21 +323,18 @@ public class VisitorImpl implements Visitor {
                 unaryExpression.setType(new BooleanType());
             }
         }
-        System.out.println(unaryExpression.getType().toString());
     }
 
     @Override
     public void visit(BinaryExpression binaryExpression) {
-        System.out.println("&&");
         binaryExpression.getLeft().accept(this);
         binaryExpression.getRight().accept(this);
         if(binaryExpression.getBinaryOperator() == BinaryOperator.eq || binaryExpression.getBinaryOperator() == BinaryOperator.neq) {
             binaryExpression.setType(new BooleanType());
-            System.out.println("!!!!!");
         }
         if(binaryExpression.getBinaryOperator() == BinaryOperator.assign) {
             if(!isSubtype(binaryExpression.getRight().getType(), binaryExpression.getRight().getType())) {
-                errorMessages.add(binaryExpression.getLine() + "_unsupported operand type for " + BinaryOperator.assign.toString());
+                errorMessages.add(binaryExpression.getLine() + "#unsupported operand type for " + BinaryOperator.assign.toString());
                 binaryExpression.setType(new NoType());
             }
             else {
@@ -268,9 +342,9 @@ public class VisitorImpl implements Visitor {
             }
         }
         if(binaryExpression.getBinaryOperator() == BinaryOperator.and || binaryExpression.getBinaryOperator() == BinaryOperator.or) {
-            if(binaryExpression.getRight().getType().toString() != "boolean"
-                    || binaryExpression.getLeft().getType().toString() != "boolean") {
-                errorMessages.add(binaryExpression.getLine() + "_unsupported operand type for "
+            if(!(binaryExpression.getRight().getType().toString().equals("boolean"))
+                    || !(binaryExpression.getLeft().getType().toString().equals("boolean"))) {
+                errorMessages.add(binaryExpression.getLine() + "#unsupported operand type for "
                         + binaryExpression.getBinaryOperator().toString());
                 binaryExpression.setType(new NoType());
             }
@@ -282,17 +356,14 @@ public class VisitorImpl implements Visitor {
                 || binaryExpression.getBinaryOperator() == BinaryOperator.add || binaryExpression.getBinaryOperator() == BinaryOperator.sub
                 || binaryExpression.getBinaryOperator() == BinaryOperator.mod || binaryExpression.getBinaryOperator() == BinaryOperator.gt
                 || binaryExpression.getBinaryOperator() == BinaryOperator.lt) {
-            if (!(binaryExpression.getRight().getType().toString() == "int"
-                    && binaryExpression.getLeft().getType().toString() == "int")) {
-                errorMessages.add(binaryExpression.getLine() + "_unsupported operand type for "
+            if (!(binaryExpression.getRight().getType().toString().equals("int")
+                    && binaryExpression.getLeft().getType().toString().equals("int"))) {
+                errorMessages.add(binaryExpression.getLine() + "#unsupported operand type for "
                         + binaryExpression.getBinaryOperator().toString());
                 binaryExpression.setType(new NoType());
             } else {
                 binaryExpression.setType(new IntType());
             }
-        }
-        for (String str : errorMessages) {
-            System.out.println(str);
         }
     }
 
@@ -303,6 +374,9 @@ public class VisitorImpl implements Visitor {
 
     @Override
     public void visit(Identifier identifier) {
+        System.out.println("::::::::::::::::");
+        System.out.println(currentActor);
+        System.out.println(identifier.getName());
         boolean foundIt = false;
         //knownActorNames
         //actorVarNames
@@ -310,35 +384,34 @@ public class VisitorImpl implements Visitor {
         //msgHandlerLocalVarsNames = new ArrayList<String>();
         //varDeclarationNames = new ArrayList<String>();
         for (String str : knownActorNames) {
-            if(str.split("_", 3)[1] == identifier.getName() && str.split("_", 3)[0] == currentActor){
-                identifier.setType(returnType(str.split("_", 3)[2], identifier));
+            if(str.split("#", 3)[1].equals(identifier.getName()) && str.split("#", 3)[0].equals(currentActor)){
+                identifier.setType(returnType(str.split("#", 3)[2], identifier));
                 foundIt = true;
             }
         }
         for (String str : actorVarNames) {
-            if(str.split("_", 3)[1] == identifier.getName() && str.split("_", 3)[0] == currentActor){
-                identifier.setType(returnType(str.split("_", 3)[2], identifier));
+            if(str.split("#", 3)[1].equals(identifier.getName()) && str.split("#", 3)[0].equals(currentActor)){
+                identifier.setType(returnType(str.split("#", 3)[2], identifier));
                 foundIt = true;
             }
         }
         for (String str : msgHandlerArgsNames2) {
-            if (str.split("_", 4)[1] == identifier.getName() && str.split("_", 4)[0] == currentHandler
-                    &&str.split("_", 4)[2] == currentActor) {
-                identifier.setType(returnType(str.split("_", 4)[3], identifier));
+            if (str.split("#", 4)[1].equals(identifier.getName()) && str.split("#", 4)[0].equals(currentHandler)
+                    &&str.split("#", 4)[2].equals(currentActor)) {
+                identifier.setType(returnType(str.split("#", 4)[3], identifier));
                 foundIt = true;
             }
         }
-        for (String str : msgHandlerArgsNames2) {
-            if (str.split("_", 4)[1] == identifier.getName() && str.split("_", 4)[0] == currentHandler
-                    &&str.split("_", 4)[3] == currentActor) {
-                identifier.setType(returnType(str.split("_", 4)[2], identifier));
+        for (String str : msgHandlerLocalVarsNames) {
+            if (str.split("#", 4)[1].equals(identifier.getName()) && str.split("#", 4)[0].equals(currentHandler)
+                    &&str.split("#", 4)[3].equals(currentActor)) {
+                identifier.setType(returnType(str.split("#", 4)[2], identifier));
                 foundIt = true;
             }
         }
         if(!foundIt) {
-            errorMessages.add(identifier.getLine() + "_variable " + identifier.getName() +" is not declared");
+            errorMessages.add(identifier.getLine() + "#variable " + identifier.getName() +" is not declared");
             identifier.setType(new NoType());
-            System.out.println(identifier.getType().toString());
         }
     }
 
@@ -347,11 +420,11 @@ public class VisitorImpl implements Visitor {
         blockCounter ++;
         int thisBlock = blockCounter;
         globalThisBlock = thisBlock;
-        blocks.add("Block_" + blockCounter);
+        blocks.add("Block#" + blockCounter);
         for (Statement S : block.getStatements()) {
             S.accept(this);
         }
-        blocks.add("End_" + thisBlock);
+        blocks.add("End#" + thisBlock);
         globalThisBlock --;
     }
 
@@ -359,8 +432,8 @@ public class VisitorImpl implements Visitor {
     public void visit(Conditional conditional) {
         if(conditional.getExpression() != null) {
             conditional.getExpression().accept(this);
-            if (conditional.getExpression().getType().toString() != "boolean") {
-                errorMessages.add(conditional.getExpression().getLine() + "_" + "condition type must be Boolean");
+            if (!(conditional.getExpression().getType().toString().equals("boolean"))) {
+                errorMessages.add(conditional.getExpression().getLine() + "#" + "condition type must be Boolean");
             }
             conditional.getExpression().accept(this);
         }
@@ -384,8 +457,8 @@ public class VisitorImpl implements Visitor {
         }
         if(loop.getCondition() != null) {
             loop.getCondition().accept(this);
-            if (loop.getCondition().getType().toString() != "boolean") {
-                errorMessages.add(loop.getCondition().getLine() + "_condition type must be Boolean");
+            if (!(loop.getCondition().getType().toString().equals("boolean"))) {
+                errorMessages.add(loop.getCondition().getLine() + "#condition type must be Boolean");
             }
             loop.getCondition().accept(this);
         }
@@ -396,48 +469,73 @@ public class VisitorImpl implements Visitor {
         if(msgHandlerCall.getInstance() instanceof Self) {
             boolean foundIt = false;
             for (String str : msgHandlerNames) {
-                if(str.split("_", 2)[0] == currentActor
-                        && str.split("_", 2)[1] == msgHandlerCall.getMsgHandlerName().getName()) {
+                if(str.split("#", 2)[0].equals(currentActor)
+                        && str.split("#", 2)[1].equals(msgHandlerCall.getMsgHandlerName().getName())) {
                     foundIt = true;
                 }
             }
             if(!foundIt) {
-                errorMessages.add(msgHandlerCall.getMsgHandlerName().getLine() + "_"
+                errorMessages.add(msgHandlerCall.getMsgHandlerName().getLine() + "#"
                         + "there is no msghandler name " + msgHandlerCall.getMsgHandlerName().getName()
                         + " in actor " + currentActor);
             }
         }
         else if(msgHandlerCall.getInstance()  instanceof Sender) {
-            if (msgHandlerCall.getMsgHandlerName().getName() == "initial") {
-                errorMessages.add(msgHandlerCall.getMsgHandlerName().getLine() + "_" + "no sender in initial msghandler");
+            if (msgHandlerCall.getMsgHandlerName().getName().equals("initial")) {
+                errorMessages.add(msgHandlerCall.getMsgHandlerName().getLine() + "#" + "no sender in initial msghandler");
             }
         }
         else if(msgHandlerCall.getInstance() instanceof Identifier){
             if(!(actorNames.contains(((Identifier) msgHandlerCall.getInstance()).getName()))) {
-                errorMessages.add(msgHandlerCall.getInstance().getLine() + "_actor "
-                        + ((Identifier) msgHandlerCall.getInstance()).getName() + " is not declared"); //// Instance name ??
+                boolean flag = false;
+                for (String str : knownActorNames) {
+                    if(
+                            str.split("#", 3)[1].equals(((Identifier) msgHandlerCall.getInstance()).getName())
+                            && str.split("#", 3)[0].equals(currentActor)) {
+                        flag = true;
+                    }
+//                        actorDeclaration.getName().getName() + "#" +
+//                                knownActor.getIdentifier().getName() + "#" + knownActor.getType().toString()
+                }
+                if(!flag) {
+                    errorMessages.add(msgHandlerCall.getInstance().getLine() + "#actor "
+                            + ((Identifier) msgHandlerCall.getInstance()).getName() + " is not declared"); //// Instance name ??
+                    return;
+                }
             }
-            else if(!(msgHandlerNames.contains(((Identifier) msgHandlerCall.getInstance()).getName() + "_" +
+            if(!(msgHandlerNames.contains(((Identifier) msgHandlerCall.getInstance()).getName() + "#" +
                     msgHandlerCall.getMsgHandlerName().getName()))) {
-                errorMessages.add(msgHandlerCall.getMsgHandlerName().getLine()
-                        + "_there is no msghandler name " + msgHandlerCall.getMsgHandlerName().getName()
-                        + " in actor " + ((Identifier) msgHandlerCall.getInstance()).getName());
+                boolean flag = false;
+                for (String str : knownActorNames) {
+                    if(str.split("#", 3)[1].equals(((Identifier) msgHandlerCall.getMsgHandlerName()).getName())
+                                    && str.split("#", 3)[0].equals(currentActor)) {
+                        flag = true;
+                    }
+//                        actorDeclaration.getName().getName() + "#" +
+//                                knownActor.getIdentifier().getName() + "#" + knownActor.getType().toString()
+                }
+                if(!flag) {
+                    errorMessages.add(msgHandlerCall.getMsgHandlerName().getLine()
+                            + "#there is no msghandler name " + msgHandlerCall.getMsgHandlerName().getName()
+                            + " in actor " + ((Identifier) msgHandlerCall.getInstance()).getName());
+                    return;
+                }
             }
             else {
                 boolean flag = false;
                 for (int i = 0; i < msgHandlerArgsNames.size(); i++) {
                     String argName = msgHandlerArgsNames.get(i);
-                    if(msgHandlerCall.getMsgHandlerName().getName() == argName.split("_", 2)[0]
-                            && ((Identifier) msgHandlerCall.getInstance()).getName() == argName.split("_", 2)[2]) {
+                    if(msgHandlerCall.getMsgHandlerName().getName().equals(argName.split("#", 2)[0])
+                            && ((Identifier) msgHandlerCall.getInstance()).getName().equals(argName.split("#", 2)[2])) {
                         int z = 0;
                         flag = true;
                         for (Expression exp : msgHandlerCall.getArgs()) {
                             argName = msgHandlerArgsNames.get(i+z);
-                            if(msgHandlerCall.getMsgHandlerName().getName() == argName.split("_", 2)[0]
-                                    && ((Identifier) msgHandlerCall.getInstance()).getName() == argName.split("_", 2)[2]) {
+                            if(msgHandlerCall.getMsgHandlerName().getName().equals(argName.split("#", 2)[0])
+                                    && ((Identifier) msgHandlerCall.getInstance()).getName().equals(argName.split("#", 2)[2])) {
                                 exp.accept(this);
-                                if (!(exp.getType().toString() == argName.split("_", 3)[1])) {
-                                    errorMessages.add(exp.getLine() + "_" + "knownactors does not match with definition");
+                                if (!(exp.getType().toString().equals(argName.split("#", 3)[1]))) {
+                                    errorMessages.add(exp.getLine() + "#" + "knownactors does not match with definition");
                                 }
                             }
                             else {
@@ -461,18 +559,14 @@ public class VisitorImpl implements Visitor {
 
     @Override
     public void visit(Assign assign) {
-        System.out.println("******");
         assign.getlValue().accept(this);
         assign.getrValue().accept(this);
         if(!(isSubtype(assign.getrValue().getType(), assign.getlValue().getType()))) {
-            errorMessages.add(assign.getLine() + "_left side of assignment must be a valid lvalue");
+            errorMessages.add(assign.getLine() + "#left side of assignment must be a valid lvalue");
             assign.getlValue().setType(new NoType());
         }
         else {
             System.out.println("MAHYA");
-        }
-        for (String str : errorMessages) {
-            System.out.println(str);
         }
     }
 
