@@ -8,6 +8,11 @@ public class For extends Statement {
     private Expression condition;
     private Assign update;
     private Statement body;
+    private boolean seenBreakOrContinue;
+
+    public boolean returnSeenBreakOrContinue (){
+        return seenBreakOrContinue;
+    }
 
     public Assign getInitialize() {
         return initialize;

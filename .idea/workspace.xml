@@ -3,7 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="7e36c3f3-6754-4b81-bc79-0560b6e319e8" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Phase3/acton.g4" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Phase3/acton.g4" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Phase3/main/ast/node/statement/For.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Phase3/main/ast/node/statement/For.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Phase3/main/visitor/VisitorImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Phase3/main/visitor/VisitorImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/acton.g4" beforeDir="false" afterPath="$PROJECT_DIR$/src/acton.g4" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/ast/node/statement/For.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/ast/node/statement/For.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/visitor/VisitorImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/visitor/VisitorImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test.act" beforeDir="false" afterPath="$PROJECT_DIR$/test.act" afterDir="false" />
     </list>
